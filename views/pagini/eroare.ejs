@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+        <meta name="description" content="CKN Sneakers va incalta cu cei mai noi adidasi">
+        <meta name="keywords" content="sneakers, CKN, CKN Sneakers, adidasi, incaltaminte">
+        <title>CKN SNEAKERS - eroare</title>
+        <link rel="stylesheet" type="text/css" href="/resurse/CSS/eroare.css">
+        <%- include("../fragmente/head.ejs");  %> 
+
+    </head>
+
+    <body>
+        
+    <%- include("../fragmente/header.ejs");  %> 
+
+    <main>
+        <div id="err-coloane">
+			<div id="err-imag">
+				<img src="<%- locals.imagine %>" />
+			</div>
+			<section>
+				<h2><%- locals.titlu %></h2>
+				<p><%- locals.text %></p>
+			</section>
+		</div>
+    </main>
+    
+    <%- include("../fragmente/footer.ejs");  %> 
+
+
+    </body>
+</html>

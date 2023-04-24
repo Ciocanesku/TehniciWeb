@@ -1,0 +1,53 @@
+html{
+    font-size: 12px;
+}
+body{
+    --spatiere-pagina:10px;
+    --padding-sectiune:5px;
+}
+#grid-pagina{
+    display: grid;
+    grid-template-areas: 
+    "z-welcome "
+    "z-calendar-evenimente" 
+    "z-tabel" 
+    "z-anunturi"
+
+    "z-promotii" 
+    "z-produse"
+    "z-index-intrebari" 
+    "z-orar "
+
+    "z-date-site"  
+    "z-lista-utilizatori" 
+    "z-statistici"
+    "z-review";
+}
+
+#grid-pagina > *{
+    margin-bottom:15px;
+}
+#tabel table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  
+  #triunghi {
+    height: 10px;
+    width: 100%;
+    display: inline-block;
+    color:#262626;
+    font-size:45px;
+    text-align: center;
+    vertical-align:top;
+    transform: translateY(30%);
+    transition:0.5s linear;
+    position:sticky;
+}
+
+#tabel th, td {
+    text-align: left;
+    padding: 8px;
+  }

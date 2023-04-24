@@ -1,0 +1,71 @@
+{
+	"cale_galerie":"resurse/imagini/galerie",
+	"imagini": [
+		{
+			"fisier":"af1.jpg",
+			"descriere":"Air Force 1",
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+		},
+		{
+			"fisier":"foampsite.jpg",
+			"descriere":"Nike Foampsite",
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+			
+		},
+		{
+			"fisier":"afgoretex.jpg",
+			"descriere":"Air Force 1 High GORETEX",
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+		},
+		{
+			"fisier":"retro1.jpg",
+			"descriere":"Air Jordan Retro 1",			
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+		},
+		{
+			"fisier":"retro5.jpg",
+			"descriere":"Air Jordan Retro 5",
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+
+		},
+		{
+			"fisier":"yeezy.jpg",
+			"descriere":"Adidas Yeezy Boost",
+			"ore":["12", "13", "14","15","16","17","18","19","20"]
+
+		},
+		{
+			"fisier":"af1ow.jpg",
+			"descriere":"Air Force 1 Off-White",
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+		},
+		{
+			"fisier":"dunklow.jpg",
+			"descriere":"Nike Dunk Low",
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+			
+		},
+		{
+			"fisier":"kyrie4.jpg",
+			"descriere":"Nike Kyrie 4",
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+		},
+		{
+			"fisier":"retro4ow.jpg",
+			"descriere":"Air Jordan Retro 4 Off-White",			
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+		},
+		{
+			"fisier":"retro1blue.jpg",
+			"descriere":"Air Jordan Retro 1 Blue",
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+
+		},
+		{
+			"fisier":"retro1ow.jpg",
+			"descriere":"Air Jordan Retro 1 Off-White",
+			"ore":["0", "1", "2","3","4","5","6","7","8","9","10","11","21","22","23"]
+
+		}
+	]
+}

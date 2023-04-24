@@ -1,0 +1,17 @@
+body{
+    --inaltime-meniu:25px;
+    --latime-buton:300px;
+    --culoare-border-buton:black;
+    
+}
+
+
+
+
+#acasa{
+    display:none;
+}
+
+#acasa-mediu{
+    display: block;
+}

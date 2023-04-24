@@ -1,0 +1,40 @@
+html{
+    font-size: 16px;
+}
+
+
+body{
+    --spatiere-pagina:30px;
+    --padding-sectiune:10px;
+}
+#grid-pagina{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr; 
+    grid-template-areas: 
+    "z-welcome z-welcome z-welcome"
+    "z-welcome z-welcome z-welcome"
+
+    "z-calendar-evenimente z-tabel z-anunturi"
+
+    "z-promotii  z-produse z-produse"
+    "z-index-intrebari z-index-intrebari z-orar "
+
+    "z-date-site  z-lista-utilizatori z-statistici"
+    "z-review z-review z-review";
+}
+
+#tabel table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  
+#tabel th, td {
+    text-align: left;
+    padding: 8px;
+  }
+
+.text,.reflexie{
+    top:15%;
+}

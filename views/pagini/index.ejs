@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html  lang="ro">
+    <head>
+
+
+        
+        <meta name="description" content="CKN Sneakers pentru cei mai fresh sneakersi">
+        <meta name="keywords" content="adidasi, incaltaminte, incaltaminte sport, sneakers">
+        <%- include("../fragmente/head.ejs") %>
+        <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+
+
+
+    </head>
+    <body>
+        <%- include("../fragmente/header.ejs") %>
+    
+    <main>
+        <div id="grid-pagina">
+            <section id="welcome">
+                <h2><div class="container">
+                    <div class="text">Bine ati venit!</div>
+                    <div class="reflexie">Bine ati venit!</div>
+                  </div></h2>
+                <p class="intro">Vă mulțumim că ne vizitați site-ul. Suntem aici ca voi toti sa aveti cei mai fresh sneakersi!</p>
+                <div class="intro-oferte"><div>Incaltaminte barbati pentru fotbal</div><div>Incaltaminte barbati pentru baschet</div><div>Incaltaminte barbati casual</div><div>Pantofi femei</div><div>Sneakersi barbati/femei</div></div>
+                <p class="anunt">Mereu te simti bine cand esti incaltat bine!</p>
+                <div id="dv-prezentare-1">
+                    <div id="dv-prezentare">
+                    <picture>
+                        <!-- il ia pe primul care se potriveste cu query-ul din media-->
+                        <source srcset="/resurse/imagini/retro4.200px.jpg" media="(max-width:800px)">
+                        <source srcset="/resurse/imagini/retro4.350px.jpg" media="(max-width:1400px)">
+                        <img src="/resurse/imagini/retro4.jpg" alt="text">
+                    </picture>
+                    <a href="/resurse/imagini/retro4.jpg" download>(Descarca poza!)</a>
+                    
+                </div>
+                </div>
+                </section>
+            <section id="promotii">
+                <h2>Promoții</h2>
+
+                <article>
+                    <h3 class="titlu">Super ofertă </h3>
+                    <p><strong>CKN Sneakers</strong> oferă <b>reduceri de <s>10%</s> <ins>15%</ins></b> pentru toate produsele cumpărate de primii 1000 de clienti ai site-ului.</p>
+                    <p>Oferta este valabilă doar pana la atingerea a 1000 exclusiv online la <abbr title="CKN Sneakers">CKN Sneakers</abbr>.</p>
+                </article>
+            </section>
+            <section id="calendar-evenimente">
+                <h2>Calendar Evenimente</h2>
+                <article>
+                    <h3 class="titlu">Calendar Evenimente </h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe suscipit nostrum quae nobis architecto aliquam possimus nihil, totam cupiditate exercitationem sapiente maiores excepturi deserunt dignissimos expedita vero ut facilis iste?</p>
+                </article>
+            </section>
+
+            <section id="lista-utilizatori">
+                <h2>Lista de utilizatori online</h2>
+                <article>
+                    <h3 class="titlu">Lista de utilizatori online </h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe suscipit nostrum quae nobis architecto aliquam possimus nihil, totam cupiditate exercitationem sapiente maiores excepturi deserunt dignissimos expedita vero ut facilis iste?</p>
+                </article>
+            </section>
+
+            <section id="statistici">
+                <h2>Date despre utilizatori si statistici</h2>
+                <article>
+                    <p>IP: <%- locals.ip %></p>
+                    <h3 class="titlu">Date despre utilizatori si statistici </h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe suscipit nostrum quae nobis architecto aliquam possimus nihil, totam cupiditate exercitationem sapiente maiores excepturi deserunt dignissimos expedita vero ut facilis iste?</p>
+                </article>
+            </section>
+
+            <section id="date-site">
+                <h2>Date despre site si server</h2>
+                <article>
+                    <h3 class="titlu">Date despre site si server</h3>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe suscipit nostrum quae nobis architecto aliquam possimus nihil, totam cupiditate exercitationem sapiente maiores excepturi deserunt dignissimos expedita vero ut facilis iste?</p>
+                </article>
+            </section>
+            
+            <div id="tabel" style="overflow-x: auto;">
+                <h2>Tabel</h2>
+                <article>
+                    <table>
+                        <caption> Top vanzari</caption>
+                        <thead>
+                            <tr>
+                                <th>Produs</th>
+                                <th>Pret</th>
+                                <th>Data lansarii</th>
+                                <th>Valabilitate stoc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Retro 4</td>
+                                <td>899 ron</td>
+                                <td>17 Martie 2020</td>
+                                <td>7 bucati</td>
+                            </tr>
+                            <tr>
+                                <td>Retro 1</td>
+                                <td>1000 ron</td>
+                                <td>23 Iunie 2019</td>
+                                <td>2 bucati</td>
+                            </tr>
+                            <tr>
+                                <td>Retro 5</td>
+                                <td>750 ron</td>
+                                <td>18 Mai 2021</td>
+                                <td>Stoc epuizat</td>
+                            </tr>
+                            <tr>
+                                <td>Nike Foampsite</td>
+                                <td>850 ron</td>
+                                <td>5 August 2018</td>
+                                <td>4 bucati</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">Mentiune de onoare</td>
+                            </tr>
+                            <tr>
+                                <td>Veer</td>
+                                <td>80 ron</td>
+                                <td>5 August 2015</td>
+                                <td>Stoc epuizat</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">In total 4 entități.</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                 
+                </article>
+            </div>
+            
+            <section id="produse">
+                <h2>Produsele noastre</h2>
+                <p>Vă oferim o multitudine de modele de incaltaminte, atat pentru barbati, cat si pentru femei.</p>
+                <section>
+                    <h3>Incaltaminte barbati</h3>
+                    <p>În caz că te cheama baietii la baschet, la fotbal, sau vrei doar sa iesi in oras si nu mai ai cu ce sa te incalti, avem solutia. </p>
+                    <p>Avem urmatoarele tipuri de incaltaminte:</p>
+                    <ul>
+                        <li>pentru fotbal</li>
+                        <li>pentru baschet</li>
+                        <li>casual</li>
+                        <li>sneakers</li>
+                    </ul>
+                <hr class="hr-produse">
+                </section>
+                <section>
+                    <h3>Incaltaminte femei</h3>
+                    <p>Vrei sa iesi cu fetele si nu mai sti cu ce sa te incalti? Nu exista o astfel de problema pe care sa nu o rezolvam </p>
+                    <p>Avem urmatoarele tipuri de incaltari</p>
+                    <ul>
+                        <li>pantofi</li>
+                        <li>sneakers</li>
+                    </ul>
+                </section>
+            </section>
+            <section id="orar">
+                <h2>Program asistenta online</h2>
+                <table id="tab-orar">
+                    <thead>
+
+                        <tr>
+                            <th></th>
+                            <th>Perioadă</th>
+                            <th>Zi</th>
+                            <th>Ora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td rowspan="5">Zile<br>Lucrătoare</td>
+                            <td>Luni</td>
+                            <td>10-18</td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
+                            
+                            <td>Marti</td>
+                            <td>10-18</td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
+                            
+                            <td>Miercuri</td>
+                            <td>10-18</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            
+                            <td>Joi</td>
+                            <td>10-18</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            
+                            <td>Vineri</td>
+                            <td>10-18</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td rowspan="2">Weekend</td>
+                            <td>Sambata</td>
+                            <td>10-16</td>
+
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Duminica</td>
+                            <td>inchis</td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </section>
+
+            <section id="anunturi">
+                <h2>Anunțuri</h2> 
+                <p><time datetime="2022-01-05">5 ianuarie 2022</time> <strong>Reducere 20% pana pe data de 10 ianuarie!</strong></p>
+               
+                <p><time datetime="2020-07-05">5 iulie 2020</time> Avem cel mai mic pret la adidas ultraboost </p>
+                <p><time datetime="2020-09-15">15 septembrie 2020</time> A aparut o pereche noua de yeezy boost 350 pe site</p>
+                <p><time datetime="2020-12-20">20 decembrie 2020</time> A aparut o pereche noua de retro 4</p>
+                <p><time datetime="2021-01-01">1 ianuarie 2021</time> Un an nou fericit!</p>
+            </section>
+            <section id="index-intrebari">
+                <h2>Întrebări frecvente</h2>
+                <details><summary>Produsele dumneavoastră sunt 100% autentice?</summary>
+                    <p>Da!</p>
+                </details>
+                <details><summary>In caz ca nu mi se potriveste marimea, pot face retur?</summary>
+                    <p>Da! La retur poti primi o pereche marimea potrivita sau contravaloarea perechii.</p>
+                </details>
+                <details><summary>Cum imi pot da seama de marime?</summary>
+                    <p>Fiecare produs are pe pagina sa cate un ghid de marimi de va poate ajuta!</p>
+                </details>
+                <details><summary>In cat timp imi vor ajunge adidasii?</summary>
+                    <p>Toate perechile comandate vor ajunge intr-un interval de 3-5 zile lucratoare.</p>
+                </details>
+            </section>
+            <section id="review">
+                <h2>Review-uri adidasi</h2>
+                <p>Review top 3 adidasi de pe CKN Sneakers</p>
+                <div class="container-iframe">
+                    <div class="taburi-iframe">
+                    <a href="https://www.youtube.com/embed/m4gW8qTUeZg" target="ifr-video">Review Retro 4 Bred</a>
+                    <a href="https://www.youtube.com/embed/6smKK9XP7iQ" target="ifr-video" >Review Yeezy Boost 350 v2 Black Non-Reflective</a>
+                    <a href="https://www.youtube.com/embed/gnO5IwZ-DzM" target="ifr-video" >Review retro 4 Black Cat</a>
+                    </div>         
+                    <iframe name="ifr-video" width="560" height="315" src="https://www.youtube.com/embed/m4gW8qTUeZg" 
+                    frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </section>
+        </div>
+        <section id="galerie-statica">
+            <h2>Galerie</h2>
+            <div id="grid-galerie">
+                <% for (let imag of locals.imagini) {
+                let d=new Date();
+                var v_ore=["0", "1", "2","3","4","5","6","7","8","9","10","11","12", "13", "14","15","16","17","18","19","20","21","22","23"]
+                if (imag.ore && imag.ore.includes(v_ore[d.getHours()])) {                        
+                %>
+                   
+                        <figure>
+                            <picture>
+                                <source srcset="<%- imag.fisier_mic %>" media="(max-width:700px)" />
+                                <source srcset="<%- imag.fisier_mediu %>" media="(max-width:1000px)" />
+                                <img src="<%- imag.fisier %>" alt="imagine">
+                            </picture>
+                            <figcaption><%- imag.descriere %></figcaption>
+                        </figure>
+                    <% }  %>
+                <% }  %>
+            </div>
+        </section>
+
+    </main>
+    <%- include("../fragmente/footer.ejs") %>
+    
+    <small>Copyright &copy; <time datetime="2023-02-27">27 Februarie 2023</time> </small>
+    <a href="#" id="Link-top" title="Mergi catre inceputul paginii">
+        <div id="triunghi">🠹</div> 
+
+    </a>
+    </body>
+</html>
