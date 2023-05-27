@@ -1,8 +1,7 @@
-@use "../../node_modules/bootstrap/scss/bootstrap.scss" with 
-(
-    $primary:#A6A6A6,
-    $secondary:#0D0D0D,
-    $body-bg:#A6A6A6,
-    $body-color:#0D0D0D,
-    $font-family-base: Arial
-)
+@use "../../node_modules/bootstrap/scss/bootstrap.scss" with (
+  $primary: #F0EEEA,
+  $secondary: #867368,
+  $body-bg: #F0EEEA,
+  $form-range-thumb-bg:#867368,
+  $font-family-base: Arial
+); 
