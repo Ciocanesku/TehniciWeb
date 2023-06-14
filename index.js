@@ -12,6 +12,14 @@ const {Utilizator}=require("./module_proprii/utilizator.js")
 const session=require('express-session');
 const Drepturi = require("./module_proprii/drepturi.js");
 
+const QRCode= require('qrcode');
+const puppeteer=require('puppeteer');
+const mongodb=require('mongodb');
+const helmet=require('helmet');
+const xmljs=require('xml-js');
+
+const request=require("request");
+
 
 AccesBD.getInstanta().select({tabel:"adidasi",
                             campuri:["nume","pret","greutate"], 
@@ -39,8 +47,15 @@ obGlobal={
     folderScss: path.join(__dirname, "resurse/scss"),
     folderCss: path.join(__dirname, "resurse/css"),
     folderBackup: path.join(__dirname, "backup"), 
-    optiuniMeniu:[]
+    optiuniMeniu:[],
+    protocol:"http://",
+    numeDomeniu:"localhost:8080",
+    clientMongo:mongodb.MongoClient,
+    bdMongo:null
 }
+
+var url = "mongodb://localhost:27017";//pentru versiuni mai vechi de Node
+var url = "mongodb://0.0.0.0:27017";
 
 
 app= express();
@@ -135,6 +150,14 @@ app.use("/*",function(req, res, next){
     next();
 })
 
+// pt cos virtual
+
+app.use(["/produse_cos","/cumpara"],express.json({limit:'2mb'}));//obligatoriu de setat pt request body de tip json
+
+app.use(["/contact"], express.urlencoded({extended:true}));
+/////////////////////////////////////////////
+
+
 app.use(/^\/resurse(\/[a-zA-Z0-9]*)*$/, function(req,res){
     afisareEroare(res,403);
 });
@@ -161,33 +184,33 @@ app.get(["/index","/","/home","/login" ], function(req, res){
 
 
 
-app.get("*/galerie-animata.css",function(req, res){
+// app.get("*/galerie-animata.css",function(req, res){
 
-    var sirScss=fs.readFileSync(__dirname+"/resurse/scss_ejs/galerie_animata.scss").toString("utf8");
-    var culori=["navy","black","purple","grey"];
-    var indiceAleator=Math.floor(Math.random()*culori.length);
-    var culoareAleatoare=culori[indiceAleator]; 
-    rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
-    console.log(rezScss);
-    var caleScss=__dirname+"/temp/galerie_animata.scss"
-    fs.writeFileSync(caleScss,rezScss);
-    try {
-        rezCompilare=sass.compile(caleScss,{sourceMap:true});
+//     var sirScss=fs.readFileSync(__dirname+"/resurse/scss_ejs/galerie_animata.scss").toString("utf8");
+//     var culori=["navy","black","purple","grey"];
+//     var indiceAleator=Math.floor(Math.random()*culori.length);
+//     var culoareAleatoare=culori[indiceAleator]; 
+//     rezScss=ejs.render(sirScss,{culoare:culoareAleatoare});
+//     console.log(rezScss);
+//     var caleScss=__dirname+"/temp/galerie_animata.scss"
+//     fs.writeFileSync(caleScss,rezScss);
+//     try {
+//         rezCompilare=sass.compile(caleScss,{sourceMap:true});
         
-        var caleCss=__dirname+"/temp/galerie_animata.css";
-        fs.writeFileSync(caleCss,rezCompilare.css);
-        res.setHeader("Content-Type","text/css");
-        res.sendFile(caleCss);
-    }
-    catch (err){
-        console.log(err);
-        res.send("Eroare");
-    }
-});
+//         var caleCss=__dirname+"/temp/galerie_animata.css";
+//         fs.writeFileSync(caleCss,rezCompilare.css);
+//         res.setHeader("Content-Type","text/css");
+//         res.sendFile(caleCss);
+//     }
+//     catch (err){
+//         console.log(err);
+//         res.send("Eroare");
+//     }
+// });
 
-app.get("*/galerie-animata.css.map",function(req, res){
-    res.sendFile(path.join(__dirname,"temp/galerie-animata.css.map"));
-});
+// app.get("*/galerie-animata.css.map",function(req, res){
+//     res.sendFile(path.join(__dirname,"temp/galerie-animata.css.map"));
+// });
 
 
 // --------------------------------------------- Produse ---------------------------------------
@@ -370,12 +393,12 @@ app.post("/profil", function(req, res){
             {tabel:"utilizatori",
             campuri:["nume","prenume","email","culoare_chat"],
             valori:[`${campuriText.nume}`,`${campuriText.prenume}`,`${campuriText.email}`,`${campuriText.culoare_chat}`],
-            conditiiAnd:[`parola='${parolaCriptata}'`]
+            conditiiAnd:[`parola='${parolaCriptata}'`, `username='${campuriText.username}'`] ///////trebuie si username
         },          
         function(err, rez){
             if(err){
                 console.log(err);
-                randeazaEroare(res,2);
+                afisareEroare(res,2);
                 return;
             }
             console.log(rez.rowCount);
@@ -472,6 +495,127 @@ app.get("/cod/:username/:token",function(req,res){
 })
 
 
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////Cos virtual
+app.post("/produse_cos",function(req, res){
+    console.log(req.body);
+    if(req.body.ids_prod.length!=0){
+        //TO DO : cerere catre AccesBD astfel incat query-ul sa fi `select nume, descriere, pret, gramaj, imagine from prajituri where id in (lista de id-uri)`
+        AccesBD.getInstanta().select({tabel:"adidasi", campuri:"nume,descriere,pret,greutate,imagine".split(","),conditiiAnd:[`id in (${req.body.ids_prod})`]},
+        function(err, rez){
+            if(err)
+                res.send([]);
+            else
+                res.send(rez.rows); 
+        });
+}
+    else{
+        res.send([]);
+    }
+ 
+});
+
+
+cale_qr=__dirname+"/resurse/imagini/qrcode";
+if (fs.existsSync(cale_qr))
+  fs.rmSync(cale_qr, {force:true, recursive:true});
+fs.mkdirSync(cale_qr);
+client.query("select id from adidasi", function(err, rez){
+    for(let prod of rez.rows){
+        let cale_prod=obGlobal.protocol+obGlobal.numeDomeniu+"/produs/"+prod.id;
+        //console.log(cale_prod);
+        QRCode.toFile(cale_qr+"/"+prod.id+".png",cale_prod);
+    }
+});
+
+async function genereazaPdf(stringHTML,numeFis, callback) {
+    const chrome = await puppeteer.launch();
+    const document = await chrome.newPage();
+    console.log("inainte load")
+    await document.setContent(stringHTML, {waitUntil:"load"});
+    
+    console.log("dupa load")
+    await document.pdf({path: numeFis, format: 'A4'});
+    await chrome.close();
+    if(callback)
+        callback(numeFis);
+}
+
+app.post("/cumpara",function(req, res){
+    console.log(req.body);
+    console.log("Utilizator:", req?.utilizator);
+    console.log("Utilizator:", req?.utilizator?.rol?.areDreptul?.(Drepturi.cumparareProduse));
+    console.log("Drept:", req?.utilizator?.areDreptul?.(Drepturi.cumparareProduse));
+    if (req?.utilizator?.areDreptul?.(Drepturi.cumparareProduse)){
+        AccesBD.getInstanta().select({
+            tabel:"adidasi",
+            campuri:["*"],
+            conditiiAnd:[`id in (${req.body.ids_prod})`]
+        }, function(err, rez){
+            if(!err  && rez.rowCount>0){
+                console.log("produse:", rez.rows);
+                let rezFactura= ejs.render(fs.readFileSync("./views/pagini/factura.ejs").toString("utf-8"),{
+                    protocol: obGlobal.protocol, 
+                    domeniu: obGlobal.numeDomeniu,
+                    utilizator: req.session.utilizator,
+                    produse: rez.rows
+                });
+                console.log(rezFactura);
+                let numeFis=`./temp/factura${(new Date()).getTime()}.pdf`;
+                genereazaPdf(rezFactura, numeFis, function (numeFis){
+                    mesajText=`Stimate ${req.session.utilizator.username} aveti mai jos factura.`;
+                    mesajHTML=`<h2>Stimate ${req.session.utilizator.username},</h2> aveti mai jos factura.`;
+                    req.utilizator.trimiteMail("Factura", mesajText,mesajHTML,[{
+                        filename:"factura.pdf",
+                        content: fs.readFileSync(numeFis)
+                    }] );
+                    res.send("Totul e bine!");
+                });
+                rez.rows.forEach(function (elem){ elem.cantitate=1});
+                let jsonFactura= {
+                    data: new Date(),
+                    username: req.session.utilizator.username,
+                    produse:rez.rows
+                }
+                if(obGlobal.bdMongo){
+                    obGlobal.bdMongo.collection("facturi").insertOne(jsonFactura, function (err, rezmongo){
+                        if (err) console.log(err)
+                        else console.log ("Am inserat factura in mongodb");
+
+                        obGlobal.bdMongo.collection("facturi").find({}).toArray(
+                            function (err, rezInserare){
+                                if (err) console.log(err)
+                                else console.log (rezInserare);
+                        })
+                    })
+                }
+            }
+        })
+    }
+    else{
+        res.send("Nu puteti cumpara daca nu sunteti logat sau nu aveti dreptul!");
+    }
+    
+});
+
+
+app.get("/grafice", function(req,res){
+    if (! (req?.session?.utilizator && req.utilizator.areDreptul(Drepturi.vizualizareGrafice))){
+        afisEroare(res, 403);
+        return;
+    }
+    res.render("pagini/grafice");
+
+})
+
+app.get("/update_grafice",function(req,res){
+    obGlobal.bdMongo.collection("facturi").find({}).toArray(function(err, rezultat) {
+        res.send(JSON.stringify(rezultat));
+    });
+})
+
+
+
 
 
 
@@ -502,7 +646,7 @@ app.get("/*",function(req, res){
                 console.log(err);
                 if(err.message.startsWith("Failed to lookup view"))
                 //afisareEroare(res,{_identificator:404, _titlu:"ceva"});
-                    afisareEroare(res,404, "ceva");
+                    afisareEroare(res,404);
                 else
                     afisareEroare(res);
             }

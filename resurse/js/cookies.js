@@ -21,6 +21,22 @@ function deleteCookie(nume){
     document.cookie=`${nume}=0; expires=${(new Date()).toUTCString()}`;
 }
 
+function deleteAllCookies() {
+    vectorParametri = document.cookie.split(";")
+    for (let param of vectorParametri) {
+        deleteCookie(param.split("=")[0])
+    }
+}
+
+function setLastFiltersCookie(filters) {
+    const jsonString = JSON.stringify(filters);
+    setCookie("last_filters", jsonString, 604800000); // Expires after 1 week 
+}
+
+function resetLastFiltersCookie() {
+    deleteCookie("last_filters");
+}
+
 
 window.addEventListener("load", function(){
     if (getCookie("acceptat_banner")){
@@ -32,3 +48,4 @@ window.addEventListener("load", function(){
         document.getElementById("banner").style.display="none"
     }
 })
+

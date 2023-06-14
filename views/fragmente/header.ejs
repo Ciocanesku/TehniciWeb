@@ -6,6 +6,24 @@
 <div class="d-flex justify-content-end">
 <button type="button" class="btn btn-primary position-absolute top-0 end-0" id="tema">☀/☾</button>
 </div>
+<% if(!locals.utilizator) { %>
+    <form id="form_inreg"  method="post" class="date"  action="/login"  enctype="multipart/form-data">
+        <p>
+            <label>
+                Username: <input type="text" name="username" id="inp-username" value="" required">
+            </label>
+        </p>
+        <p>
+            <label>
+                Parola: <input id="parl" type="password" required  name="parola" value="">
+            </label>
+        </p>
+        <p><input type="submit" value="Logare"></p>
+    </form>
+    <p><%- locals.mesajLogin %></p>
+    <% } else {%>
+       <%- locals.succesLogin %>
+    <% }  %>
 <nav>
     <label id="hamburger" for="ch-menu">
         <img src="/resurse/imagini/Hamburger_icon_alb.png" alt="menu">
@@ -34,7 +52,24 @@
             </ul>
         
         </li>
-
+        <li><a href="/cos-virtual">Cos virtual</a></li>
+                <% if(locals?.utilizator?.areDreptul?.(Drepturi.vizualizareUtilizatori)) { %>
+                    <li><div>Administrare</div>
+                        <ul>
+                            <li><a href="/useri">Useri</a></li>
+                            <li><a href="/grafice">Grafice</a></li>
+                            <li><a href="/comenzi">Comenzi</a></li>
+                        </ul>
+                    </li>
+                <% } %>
+                <% if(locals.utilizator) { %>
+                    <li><div><%- locals.utilizator.username %></div>
+                        <ul>
+                            <li><a href="/profil">Profil</a></li>
+                            <li><a href="/logout">Logout</a></li>
+                        </ul>
+                    </li>
+                <% } %>
         <li><a href="contact">Despre</a></li>
     </ul>
 </nav>
