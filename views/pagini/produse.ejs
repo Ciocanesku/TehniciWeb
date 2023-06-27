@@ -13,105 +13,95 @@
     <%- include("../fragmente/header") %>
 
     <main>
-<div class="form-floating mb-3">
-  <input class="form-control" type="text" id="inp-nume">
-  <label for="inp-nume">Nume:</label>
-</div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-floating mb-3">
+            <input class="form-control" type="text" id="inp-nume">
+            <label for="inp-nume">Nume:</label>
+          </div>
+          
+          <div class="form-floating mb-3">
+            <select class="form-select" id="inp-gen_produs">
+              <option id="sel-toate" selected value="toate">toate</option>
+              <% for (let opt of locals.optiuniGen) { %>
+              <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
+              <% } %>
+            </select>
+            <label>Select simplu gen:</label>
+          </div>
+          
+          <div class="mb-3">
+            <select class="form-select" id="inp-marimi" multiple>
+              <% for (let opt of locals.optiuniMarimi) { %>
+              <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
+              <% } %>
+            </select>
+            <label>Select multiplu pentru marimi:</label>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div>
+            Greutate:
+            <p>
+              <label class="btn btn-outline-secondary" for="i_rad1">
+                <input type="radio" class="btn-check" id="i_rad1" name="gr_rad" value="0:500" autocomplete="off">
+                Scazuta (greutate &lt; 500)
+              </label>
+            </p>
+            <p>
+              <label class="btn btn-outline-secondary" for="i_rad2">
+                <input type="radio" class="btn-check" id="i_rad2" name="gr_rad" value="500:700" autocomplete="off">
+                Medie (500 &le; greutate &lt; 700)
+              </label>
+            </p>
+            <p>
+              <label class="btn btn-outline-secondary" for="i_rad3">
+                <input type="radio" class="btn-check" id="i_rad3" name="gr_rad" value="700:1000000000" autocomplete="off">
+                Ridicata (700 &le; greutate)
+              </label>
+            </p>
+            <p>
+              <label class="btn btn-outline-secondary" for="i_rad4">
+                <input type="radio" class="btn-check" id="i_rad4" name="gr_rad" value="toate" autocomplete="off" checked="true">
+                Toate
+              </label>
+            </p>
+          </div>
 
-<div>
-  Greutate:
-  <p>
-    <label class="btn btn-outline-secondary" for="i_rad1">
-      <input type="radio" class="btn-check" id="i_rad1" name="gr_rad" value="0:500" autocomplete="off">
-      Scazuta (greutate &lt; 500)
-    </label>
-  </p>
-  <p>
-    <label class="btn btn-outline-secondary" for="i_rad2">
-      <input type="radio" class="btn-check" id="i_rad2" name="gr_rad" value="500:700" autocomplete="off">
-      Medie (500 &le; greutate &lt; 700)
-    </label>
-  </p>
-  <p>
-    <label class="btn btn-outline-secondary" for="i_rad3">
-      <input type="radio" class="btn-check" id="i_rad3" name="gr_rad" value="700:1000000000" autocomplete="off">
-      Ridicata (700 &le; greutate)
-    </label>
-  </p>
-  <p>
-    <label class="btn btn-outline-secondary" for="i_rad4">
-      <input type="radio" class="btn-check" id="i_rad4" name="gr_rad" value="toate" autocomplete="off" checked="true">
-      Toate
-    </label>
-  </p>
-</div>
-
-<label class="d-flex align-items-center">
-  Pret minim: <input type="range" class="form-range flex-grow-1" id="inp-pret" value="0" min="0" max="3500">
-  <span id="infoRange">(0)</span>
-</label>
-
-<label>
-  Select simplu gen:
-  <select class="form-select" id="inp-gen_produs">
-    <option id="sel-toate" selected value="toate">toate</option>
-    <% for (let opt of locals.optiuni) { %>
-    <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
-    <% } %>
-  </select>
-</label>
-
-<label>
-  Select multiplu pentru marimi:
-  <select class="form-select" id="inp-marimi" multiple>
-    <option value="36">36</option>
-    <option value="37">37</option>
-    <option value="38">38</option>
-    <option value="39">39</option>
-    <option value="40">40</option>
-    <option value="41">41</option>
-    <option value="41.5">41.5</option>
-    <option value="42">42</option>
-    <option value="42.5">42.5</option>
-    <option value="43">43</option>
-    <option value="43.5">43.5</option>
-    <option value="44">44</option>
-    <option value="45">45</option>
-    <option value="46">46</option>
-  </select>
-</label>
-
-<label>
-  Verificare stoc:
-  <select id="inp-verificare_stoc" class="form-select">
-    <option value="da">in stoc</option>
-    <option value="nu">lipsa stoc</option>
-    <option value="toate">toate</option>
-  </select>
-</label>
-
-<label>
-  Select simplu pentru culori:
-  <select id="inp-culori" class="form-select">
-    <option value="toate">Toate</option>
-    <option value="rosu">Rosu</option>
-    <option value="albastru">Albastru</option>
-    <option value="alb">Alb</option>
-    <option value="negru">Negru</option>
-    <option value="portocaliu">Gri</option>
-  </select>
-</label>
-
-<label>
-  Select simplu pentru categorie:
-  <select id="inp-categorie" class="form-select">
-    <option value="toate">Toate</option>
-    <option value="incaltaminte fotbal">Incaltaminte Fotbal</option>
-    <option value="incaltaminte baschet">Incaltaminte baschet</option>
-    <option value="sneaker">Sneakers</option>
-    <option value="pantofi">Pantofi</option>
-  </select>
-</label>
+          
+          <label class="d-flex align-items-center">
+            Pret minim: <span><%-locals.minPrice%></span>
+            <input class="form-range" type="range" id="inp-pret" value="<%-minPrice%>" min="<%-minPrice%>" max="<%-maxPrice%>">
+            <span><%-locals.maxPrice%></span>
+            <span id="infoRange">(0)</span>
+          </label>
+          
+          <label>
+            Select simplu pentru culori:
+            <select id="inp-culori" class="form-select">
+              <option id="sel-toate" selected value="toate">toate</option>
+              <% for (let opt of locals.optiuniCulori) { %>
+              <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
+              <% } %>
+            </select>
+          </label>
+          
+          <label>
+            Select simplu pentru categorie:
+            <select id="inp-categorie" class="form-select">
+              <option id="sel-toate" selected value="toate">toate</option>
+              <% for (let opt of locals.optiuniCategorie) { %>
+              <option value="<%- opt.unnest %>"><%- opt.unnest %></option>
+              <% } %>
+            </select>
+          </label>
+          <label>
+            Potrivite pentru toate sezoanele:
+            <input class="form-check-input" type="checkbox" id="checkbox-stoc" name="testatCheckbox" value="checkboxValue">
+        </label>
+        </div>
+      </div>
 
 <p>
   <button id="filtrare">Filtreaza</button> 
@@ -150,8 +140,9 @@
                 <% }%>
             </div>
         </section>
+    <div id="loc-afișare-produse">
+    </div>
     </main>
-
     <%- include("../fragmente/footer") %>
     </body>
 </html>

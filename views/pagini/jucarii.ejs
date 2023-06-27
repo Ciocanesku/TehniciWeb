@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ro">
+  <head>
+    <meta name="description" content="CKN Sneakers pentru cei mai fresh sneakersi">
+    <meta name="keywords" content="adidasi, incaltaminte, incaltaminte sport, sneakers">
+    <link rel="stylesheet" href="/resurse/css/jucarii.css">
+    <title>CKN SNEAKERS - home</title>
+    <%- include("../fragmente/head") %>
+  </head>
+  <body>
+    <%- include("../fragmente/header") %>
+
+    <main>
+      <section id="jucarii">
+        <h2>Jucarii</h2>
+        <div class="grid-jucarii">
+          <% for(let jucarie of locals.jucarii) { %>
+            <article class="jucarie">
+              <h2 class="titlu">Nume: <span class="val-nume"><%- jucarie.nume %></span></h2>
+              <div class="info-jucarii">
+                <p class="varsta-minima">Varsta minima: <span class="val-varsta-minima"><%- jucarie.varsta_minima %></span></p>
+                <ul class="culori-jucarie" style="list-style-type:circle;">
+                  <% jucarie.culori.sort((a, b) => b.length - a.length).forEach((culoare) => { %>
+                    <li><%- culoare %></li>
+                  <% }); %>
+                </ul>
+                <% if (jucarie.varsta_minima >= 0 && jucarie.varsta_minima <= 6) { %>
+                    <p class="gradinita">Potrivit pentru grădiniță</p>
+                    <% } %>
+                    <label>
+                      <input type="checkbox" class="checkbox-pret" value="<%- jucarie.pret %>">
+                      Pret: <span class="val-pret"><%- jucarie.pret %></span>
+                    </label>
+              </div>
+            </article>
+          <% } %>
+        </div>
+      </section>
+    </main>
+    <%- include("../fragmente/footer") %>
+  </body>
+</html>

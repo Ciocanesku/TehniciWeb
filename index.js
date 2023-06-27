@@ -214,34 +214,91 @@ app.get(["/index","/","/home","/login" ], function(req, res){
 
 
 // --------------------------------------------- Produse ---------------------------------------
-app.get("/produse",function(req, res){
-
-
-    //TO DO query pentru a selecta toate produsele
-    //TO DO se adauaga filtrarea dupa tipul produsului
-    //TO DO se selecteaza si toate valorile din enum-ul categ_prajitura
-
-    client.query("select * from unnest(enum_range(null::gen_produse))",function(err, rezCategorie){
-        // console.log(err);
-        // console.log(rez);
-        let conditieWhere=""
-        if(req.query.tip)
-            conditieWhere=`where gen_produs='${req.query.tip}'`
-
-        client.query("select * from adidasi "+conditieWhere , function( err, rez){
-            console.log(300)
-            if(err){
+app.get("/produse", function (req, res) {
+    client.query(
+        "SELECT * FROM unnest(enum_range(null::categ_adidasi))",
+        function (err, rezCategorie) {
+            if (err) {
                 console.log(err);
                 afisareEroare(res, 2);
+            } else {
+                client.query(
+                    "SELECT * FROM unnest(enum_range(null::gen_produse))",
+                    function (err, rezGen) {
+                        if (err) {
+                            console.log(err);
+                            afisareEroare(res, 2);
+                        } else {
+                            client.query(
+                                "SELECT * FROM unnest(enum_range(null::marca_produse))",
+                                function (err, rezMarca) {
+                                    if (err) {
+                                        console.log(err);
+                                        afisareEroare(res, 2);
+                                    } else {
+                                        client.query(
+                                            "SELECT * FROM unnest(enum_range(null::culori_adidasi))",
+                                            function (err, rezCulori) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    afisareEroare(res, 2);
+                                                } else {
+                                                    client.query(
+                                                        "SELECT * FROM unnest(enum_range(null::marimi_adidasi))",
+                                                        function (err, rezMarimi) {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                afisareEroare(res, 2);
+                                                            } else {
+                                                                let conditieWhere = "";
+                                                                if (req.query.categorie) {
+                                                                    conditieWhere = ` WHERE categorie='${req.query.categorie}'`;
+                                                                }
+                                                                client.query(
+                                                                    "SELECT MIN(pret) AS min_price, MAX(pret) AS max_price FROM adidasi",
+                                                                    function (err, rezPret) {
+                                                                        if (err) {
+                                                                            console.log(err);
+                                                                            afisareEroare(res, 2);
+                                                                        } else {
+                                                                            client.query(
+                                                                                "SELECT * FROM adidasi" + conditieWhere,
+                                                                                function (err, rez) {
+                                                                                    if (err) {
+                                                                                        console.log(err);
+                                                                                        afisareEroare(res, 2);
+                                                                                    } else {
+                                                                                        res.render("pagini/produse", {
+                                                                                            optiuniCategorie: rezCategorie.rows,
+                                                                                            optiuniGen: rezGen.rows,
+                                                                                            optiuniMarca: rezMarca.rows,
+                                                                                            optiuniCulori: rezCulori.rows,
+                                                                                            optiuniMarimi: rezMarimi.rows,
+                                                                                            produse: rez.rows,
+                                                                                            minPrice: rezPret.rows[0].min_price,
+                                                                                            maxPrice: rezPret.rows[0].max_price
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            );
+                                                                        }
+                                                                    }
+                                                                );
+                                                            }
+                                                        }
+                                                    );
+                                                }
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                        }
+                    }
+                );
             }
-            else
-                res.render("pagini/produse", {produse:rez.rows, optiuni:rezCategorie.rows});
-        });
-    })
-
-    
-
-
+        }
+    );
 });
 
 
@@ -639,6 +696,43 @@ app.get("/*.ejs",function(req, res){
     afisareEroare(res,400);
 })
 
+//////////////////////////////EXAMEN/////////////////////////////////////////
+
+
+
+app.get("/jucarii",function(req, res){
+    console.log("jucariiiiiiiiii!!!!!!!!!!!!!!!!")
+            client.query("select * from jucarii" , function( err, rez){
+                console.log(300)
+                if(err){
+                    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!",err);
+                    afisareEroare(res, 2);
+                }
+                else{
+                    console.log(rez);
+                    res.render("pagini/jucarii", {jucarii:rez.rows});
+                    console.log(rez)
+                }
+            });
+    
+            
+    });
+
+        
+
+
+
+//////////////////////////////EXAMEN/////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
 app.get("/*",function(req, res){
     try{
         res.render("pagini"+req.url, function(err, rezRandare){
@@ -685,27 +779,30 @@ initErori();
 //////////////////////////////////////////////////////////////
 function initImagini(){
     var continut= fs.readFileSync(__dirname+"/resurse/json/galerie.json").toString("utf-8");
-
     obGlobal.obImagini=JSON.parse(continut);
     let vImagini=obGlobal.obImagini.imagini;
-
-    let caleAbs=path.join(__dirname,obGlobal.obImagini.cale_galerie);
-    let caleAbsMediu=path.join(__dirname,obGlobal.obImagini.cale_galerie, "mediu");
-    if (!fs.existsSync(caleAbsMediu))
-        fs.mkdirSync(caleAbsMediu);
-
+    let caleAbs=path.join(__dirname, obGlobal.obImagini.cale_galerie);
+    let caleMediu=path.join(caleAbs,"mediu")
+    let caleMic=path.join(caleAbs,"mic")
+    if(!fs.existsSync(caleMediu))
+        fs.mkdirSync(caleMediu)
+    if(!fs.existsSync(caleMic))
+        fs.mkdirSync(caleMic)
     //for (let i=0; i< vErori.length; i++ )
     for (let imag of vImagini){
-        [numeFis, ext]=imag.fisier.split(".");
-        let caleFisAbs=path.join(caleAbs,imag.fisier);
-        let caleFisMediuAbs=path.join(caleAbsMediu, numeFis+".webp");
-        sharp(caleFisAbs).resize(400).toFile(caleFisMediuAbs);
-        imag.fisier_mediu=path.join("/", obGlobal.obImagini.cale_galerie, "mediu",numeFis+".webp" )
-        imag.fisier=path.join("/", obGlobal.obImagini.cale_galerie, imag.fisier )
-        //eroare.imagine="/"+obGlobal.obErori.cale_baza+"/"+eroare.imagine;
+        [numeFis, ext]=imag.fisier.split(".")
+        let caleAbsFisier=path.join(caleAbs,imag.fisier);
+        let caleAbsFisierMediu=path.join(caleMediu,numeFis)+".webp";
+        let caleAbsFisierMic=path.join(caleMic,numeFis)+".webp"
+        sharp(caleAbsFisier).resize(400).toFile(caleAbsFisierMediu)
+        sharp(caleAbsFisier).resize(200).toFile(caleAbsFisierMic)
+        imag.fisier_mediu="/"+path.join(obGlobal.obImagini.cale_galerie, "mediu", numeFis+".webp");
+        imag.fisier_mic="/"+path.join(obGlobal.obImagini.cale_galerie, "mic", numeFis+".webp");
+        imag.fisier="/"+obGlobal.obImagini.cale_galerie+"/"+imag.fisier;
     }
 }
 initImagini();
+
 
 
 /*
@@ -735,6 +832,9 @@ function afisareEroare(res, _identificator, _titlu="titlu default", _text, _imag
     
 
 }
+
+
+
 
 
 app.listen(8080);

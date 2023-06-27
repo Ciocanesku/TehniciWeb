@@ -1,66 +1,152 @@
-
-const Drepturi=require('./drepturi.js');
-
-
-class Rol{
-    static get tip() {return "generic"}
-    static get drepturi() {return []}
-    constructor (){
-        this.cod=this.constructor.tip;
+/**
+ * Clasa de baza pentru un rol.
+ */
+class Rol {
+    /**
+     * Returneaza tipul de rol.
+     * @returns {string} - Tipul de rol.
+     */
+    static get tip() {
+      return "generic";
     }
-
-    areDreptul(drept){ //drept trebuie sa fie tot Symbol
-        console.log("in metoda rol!!!!")
-        return this.constructor.drepturi.includes(drept); //pentru ca e admin
+  
+    /**
+     * Returneaza drepturile asociate rolului.
+     * @returns {Array} - Drepturile asociate rolului.
+     */
+    static get drepturi() {
+      return [];
     }
-}
-
-class RolAdmin extends Rol{
-    
-    static get tip() {return "admin"}
-    constructor (){
-        super();
+  
+    /**
+     * Constructorul clasei Rol.
+     */
+    constructor() {
+      this.cod = this.constructor.tip;
     }
-
-    areDreptul(){
-        return true; //pentru ca e admin
+  
+    /**
+     * Verifica daca rolul are un drept specificat.
+     * @param {Symbol} drept - Dreptul de verificat.
+     * @returns {boolean} - `true` daca rolul are dreptul specificat, `false` in caz contrar.
+     */
+    areDreptul(drept) {
+      return this.constructor.drepturi.includes(drept);
     }
-}
-
-class RolModerator extends Rol{
-    
-    static get tip() {return "moderator"}
-    static get drepturi() { return [
-        Drepturi.vizualizareUtilizatori,
-        Drepturi.stergereUtilizatori
-    ] }
-    constructor (){
-        super()
+  }
+  
+  /**
+   * Clasa pentru rolul de admin.
+   * Extinde clasa Rol.
+   */
+  class RolAdmin extends Rol {
+    /**
+     * Returneaza tipul de rol.
+     * @returns {string} - Tipul de rol (admin).
+     */
+    static get tip() {
+      return "admin";
     }
-}
-
-class RolClient extends Rol{
-    static get tip() {return "comun"}
-    static get drepturi() { return [
-        Drepturi.cumparareProduse
-    ] }
-    constructor (){
-        super()
+  
+    /**
+     * Constructorul clasei RolAdmin.
+     * Apeleaza constructorul parinte.
+     */
+    constructor() {
+      super();
     }
-}
-
-class RolFactory{
+  
+    /**
+     * Verifica daca rolul are un drept specificat.
+     * @returns {boolean} - `true` pentru orice drept (deoarece este admin).
+     */
+    areDreptul() {
+      return true;
+    }
+  }
+  
+  /**
+   * Clasa pentru rolul de moderator.
+   * Extinde clasa Rol.
+   */
+  class RolModerator extends Rol {
+    /**
+     * Returneaza tipul de rol.
+     * @returns {string} - Tipul de rol (moderator).
+     */
+    static get tip() {
+      return "moderator";
+    }
+  
+    /**
+     * Returneaza drepturile asociate rolului de moderator.
+     * @returns {Array} - Drepturile asociate rolului de moderator.
+     */
+    static get drepturi() {
+      return [Drepturi.vizualizareUtilizatori, Drepturi.stergereUtilizatori];
+    }
+  
+    /**
+     * Constructorul clasei RolModerator.
+     * Apeleaza constructorul parinte.
+     */
+    constructor() {
+      super();
+    }
+  }
+  
+  /**
+   * Clasa pentru rolul de client.
+   * Extinde clasa Rol.
+   */
+  class RolClient extends Rol {
+    /**
+     * Returneaza tipul de rol.
+     * @returns {string} - Tipul de rol (comun).
+     */
+    static get tip() {
+      return "comun";
+    }
+  
+    /**
+     * Returneaza drepturile asociate rolului de client.
+     * @returns {Array} - Drepturile asociate rolului de client.
+     */
+    static get drepturi() {
+      return [Drepturi.cumparareProduse];
+    }
+  
+    /**
+     * Constructorul clasei RolClient.
+     * Apeleaza constructorul parinte.
+     */
+    constructor() {
+      super();
+    }
+  }
+  
+  /**
+   * Clasa factory pentru crearea de roluri.
+   */
+  class RolFactory {
+    /**
+     * Creeaza un obiect de tipul specificat.
+     * @param {string} tip - Tipul de rol.
+     * @returns {Rol} - Obiectul de tipul specificat.
+     */
     static creeazaRol(tip) {
-        switch(tip){
-            case RolAdmin.tip : return new RolAdmin();
-            case RolModerator.tip : return new RolModerator();
-            case RolClient.tip : return new RolClient();
-        }
+      switch (tip) {
+        case RolAdmin.tip:
+          return new RolAdmin();
+        case RolModerator.tip:
+          return new RolModerator();
+        case RolClient.tip:
+          return new RolClient();
+      }
     }
-}
-
-
-module.exports={
-    RolFactory:RolFactory,
-    RolAdmin:RolAdmin
-}
+  }
+  
+  module.exports = {
+    RolFactory: RolFactory,
+    RolAdmin: RolAdmin
+  };

@@ -1,0 +1,97 @@
+/* Stilizare generală */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Stilizare antet */
+  header {
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  /* Stilizare secțiune jucării */
+  #jucarii {
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  
+  .jucarie {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .titlu {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .val-nume {
+    color: black;
+    font-weight: bold;
+  }
+  
+  .info-jucarii {
+    margin-top: 10px;
+  }
+  
+  .varsta-minima {
+    font-size: 14px;
+  }
+  
+  .val-varsta-minima {
+    color: black;
+  }
+/* Stilizare grid jucării */
+.grid-jucarii {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px 15px;
+  }
+  
+  /* Stilizare culori celule */
+  .jucarie:nth-child(8n +1),
+  .jucarie:nth-child(8n +5) {
+    background-color: red;
+  }
+  
+   .jucarie:nth-child(8n + 2),
+  .jucarie:nth-child(8n + 4),
+  .jucarie:nth-child(8n + 7) {
+    background-color: blue;
+  }
+  
+  .jucarie:nth-child(8n + 3),
+  .jucarie:nth-child(8n + 6),
+  .jucarie:nth-child(8n + 8){
+    background-color: green;
+  } 
+
+  @media (max-width: 1200px) {
+    .grid-jucarii {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .jucarie {
+      background-color: #fff !important;
+    }
+  }
+
+  /* Stilizare preț */
+.titlu:hover + .info-jucarii .val-pret {
+    animation: color-transition 3s infinite;
+  }
+  
+  @keyframes color-transition {
+    0% { background-color: initial; }
+    25% { background-color: red; }
+    50% { background-color: blue; }
+    75% { background-color: pink; }
+    100% { background-color: pink; }
+  }

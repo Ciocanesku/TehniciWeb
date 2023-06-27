@@ -38,3 +38,7 @@ body{
 .text,.reflexie{
     top:15%;
 }
+
+#columnc {
+    column-count: 1;
+}

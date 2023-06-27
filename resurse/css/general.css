@@ -528,6 +528,10 @@ hr {
     top: 20px;
     right: 20px;
 }
+
+
+
+
 #form_inreg {
     position: relative;
     top: 20px;
@@ -562,3 +566,38 @@ hr {
       opacity: 1;
     }
   }
+
+  p::selection {
+    color: var(--culoare-fundal);
+    background-color: var(--culoare-text);
+}
+
+#columnc {
+    column-count: 3;
+    padding: var(--padding-sectiune);
+    column-rule-style: dotted;
+}
+
+.text-animat {
+    font-weight: bold;
+    animation: scroll-text 5s linear infinite ;
+    overflow: hidden;
+}
+@keyframes scroll-text {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(30%);
+    }
+}
+
+#bgvid {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    /* position: fixed; */
+    /* top: 0; */
+    /* left: 0; */
+    z-index: -100;
+}
